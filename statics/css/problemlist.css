@@ -1,0 +1,18 @@
+.table .problem-list-status, .table .problem-list-id, .table .problem-list-ratio {
+    text-align: center;
+    color: #888;
+}
+
+.table .problem-list-status, .table .problem-list-title, .table .problem-list-id {
+    line-height: 40px;
+}
+
+.pagination .active a {
+    background: #ff7800;
+    border-color: #ff5500;
+}
+
+.pagination .active a:hover {
+    background: #ff9000;
+    border-color: #ff7800;
+}
