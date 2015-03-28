@@ -7,6 +7,54 @@ var helper = require("../helper");
 var async = require("async");
 
 /**
+ * check feeding code.
+ * @param req
+ * @param resp
+ */
+exports.feedCodeMiao = function(req, resp) {
+    resp.send(200, req.body);
+};
+
+/**
+ * feed code.
+ * @param req
+ * @param resp
+ */
+exports.feedCode = function(req, resp) {
+    var index = req.params.index;
+
+    resp.renderData.title = "喂食代码 - " + resp.renderData.title;
+    resp.renderData.pageType = "feedcode";
+
+    if(undefined === index) {
+        index = "";
+
+        resp.renderData.index = index;
+        resp.renderData.nav.push({ name: "Feed Code", url: "/feedcode" });
+        resp.render("problem/feedcode", resp.renderData);
+    } else {
+        var contestProblemModel = helper.common.model("contestProblem");
+        contestProblemModel.getPracticeProblemInfo(index, function(err, problem) {
+            problem.title = problem.title.replaceAll("\"", "\\\"");
+            if(err) {
+                return resp.redirect("/feedcode");
+            }
+
+            resp.renderData.index = index;
+            resp.renderData.nav.push({ "name": "Problem List", "url": "/problem/list/" });
+            resp.renderData.nav.push({ "name": "Page " + parseInt(((index - 1000) / 100) + 1), "url": "/problem/list/" + parseInt(((index - 1000) / 100) + 1) });
+            resp.renderData.nav.push({ "name": problem.title, "url": "/problem/" + index });
+            resp.renderData.nav.push({ "name": "Feed Code", "url": "/feedcode/" + index });
+            resp.renderData.title = "[P" + index + "] " + problem.title + " - " + resp.renderData.title;
+            resp.renderData.pageType = "problemlist";
+            resp.renderData.problem = problem;
+
+            resp.render("problem/feedcode", resp.renderData);
+        });
+    }
+};
+
+/**
  * 题目详情
  * @param req
  * @param resp
@@ -20,12 +68,13 @@ exports.info = function(req, resp) {
         return resp.redirect("/problem/list");
     }
 
-    contestProblemModel.getProblemInfo(index, function(err, problem) {
+    contestProblemModel.getPracticeProblemInfo(index, function(err, problem) {
         if(err) {
             return resp.redirect("/problem/list");
         }
 
-        resp.renderData.nav.push({ "name": "Problem List", "url": "/problem/list/" + parseInt(((index - 1000) / 100) + 1) });
+        resp.renderData.nav.push({ "name": "Problem List", "url": "/problem/list/" });
+        resp.renderData.nav.push({ "name": "Page " + parseInt(((index - 1000) / 100) + 1), "url": "/problem/list/" + parseInt(((index - 1000) / 100) + 1) });
         resp.renderData.nav.push({ "name": problem.title, "url": "/problem/" + index });
         resp.renderData.title = "[P" + index + "] " + problem.title + " - " + resp.renderData.title;
         resp.renderData.pageType = "problemlist";
@@ -85,4 +134,4 @@ exports.list = function(req, resp) {
 
         resp.render("problem/list", resp.renderData);
     });
-}
+};

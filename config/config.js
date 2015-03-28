@@ -1,6 +1,14 @@
 /**
  * Created by XadillaX on 13-12-17.
  */
+String.prototype.replaceAll = function(reallyDo, replaceWith, ignoreCase) {
+    if (!RegExp.prototype.isPrototypeOf(reallyDo)) {
+        return this.replace(new RegExp(reallyDo, (ignoreCase ? "gi": "g")), replaceWith);
+    } else {
+        return this.replace(reallyDo, replaceWith);
+    }
+}
+
 var log4js = require("log4js");
 log4js.configure({
     appenders: [

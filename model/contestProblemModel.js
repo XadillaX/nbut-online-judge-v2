@@ -17,19 +17,37 @@ function ContestProblemModel() {
 
 util.inherits(ContestProblemModel, BaseModel);
 
-ContestProblemModel.prototype.getProblemInfo = function(index, callback) {
+/**
+ * Get one problem information.
+ * @param index
+ * @param callback
+ */
+ContestProblemModel.prototype.getPracticeProblemInfo = function(index, callback) {
     var self = this;
     var sql = "SELECT * FROM `oj_contestproblem` LEFT JOIN `oj_problem` ON `oj_contestproblem`.`problemid`=`oj_problem`.`problemid` " +
         "WHERE `contestid`=1 AND `index`=?";
     var condition = [ index ];
 
     async.waterfall([
+        /**
+         * step 1.
+         *     get mysql connection.
+         *
+         * @param callback
+         */
         function(callback) {
             self.pool.getConnection(function(err, conn) {
                 callback(err, conn);
             });
         },
 
+        /**
+         * step 2.
+         *     querying.
+         *
+         * @param conn
+         * @param callback
+         */
         function(conn, callback) {
             conn.query(sql, condition, function(err, result) {
                 if(err) {
@@ -89,7 +107,7 @@ ContestProblemModel.prototype.getPracticePageCount = function(callback) {
 ContestProblemModel.prototype.getPracticeList = function(page, callback) {
     var sql = "SELECT ?? FROM `oj_contestproblem` LEFT JOIN `oj_problem` ON `oj_problem`.`problemid` = `oj_contestproblem`.`problemid`" +
         " WHERE `contestid`=1 ORDER BY `oj_contestproblem`.`index` ASC " +
-        "LIMIT " + (parseInt(page - 1) * this.practicePerPage) + ", " + this.practicePerPage + " "
+        "LIMIT " + (parseInt(page - 1) * this.practicePerPage) + ", " + this.practicePerPage;
     var fields = [ "index", "title", "submit", "solved" ];
 
     this.pool.getConnection(function(err, conn) {

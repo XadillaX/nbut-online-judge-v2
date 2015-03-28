@@ -3,11 +3,16 @@
  */
 var problemController = require("../../controller/problem");
 
-exports.post = {};
+exports.post = {
+    "/feedcode/miao~"           : problemController.feedCodeMiao
+};
 
 exports.get = {
     "/problem/list"             : problemController.list,
     "/problem/list/:page"       : problemController.list,
 
-    "/problem/:index"           : problemController.info
+    "/problem/:index"           : problemController.info,
+
+    "/feedcode"                 : problemController.feedCode,
+    "/feedcode/:index"          : problemController.feedCode
 };
