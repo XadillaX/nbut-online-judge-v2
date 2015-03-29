@@ -8,10 +8,10 @@ router.get("/gravatar/:username/:size", function(req, resp) {
 
     User.where({ username: username }).findOne(function(err, user) {
         if(err || !user) {
-            return resp.send(200, "/images/default-avatar.gif");
+            return resp.send("/images/default-avatar.gif");
         }
 
-        resp.send(200, User.getGravatar(user.email, size));
+        resp.send(User.getGravatar(user.email, size));
     });
 });
 
