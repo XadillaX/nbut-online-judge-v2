@@ -26,23 +26,92 @@ html
                         li(id="topnav-contest"): a(href="/contest") 比赛天
                         li(id="topnav-faq"): a(href="/faq") 帮助
 
-        block content
+                     ul(class="nav navbar-nav navbar-right")
+                         - if(loggedIn === false || loggedIn === undefined) {
+                         li: div(class="btn-group btn-group-xs")
+                             a(href="/secure/signin" title="登录" type="button" class="btn btn-default") 登录
+                             a(type="button" class="btn btn-default") 注册
+                         - } else {
+                         1234
+                         - }
+
+        div.banner
+
+        div.container(style="margin-top: 10px;")
+            ol.breadcrumb
+                li 当前位置
+
+                // output the whole breadcrumb
+                - for(var i = 0; i < nav.length; i++) {
+                -     if(i === nav.length - 1) {
+                li.active #{nav[i].name}
+                -     } else {
+                li: a(href="#{nav[i].url}") #{nav[i].name}
+                -     }
+                - }
+
+        div(class="container transparent-85" style="margin-bottom: 80px;")
+            div.row
+                div.col-md-9
+                    block content
+                div.col-md-3
+                    div(class="well mi-nav")
+                        ul(class="nav nav-pills nav-stacked")
+                            h4 迷の导航
+                            li#rightnav-home: a(href="/index" title="幻想乡") 首页
+                            li#rightnav-problemlist: a(href="/problem/list" title="练习题库") 练习题库
+                            li#rightnav-run: a(href="/run" title="运行状态") 运行状态
+                            li#rightnav-recent-contest: a(href="/recent-content" title="近期比赛") 近期比赛
+
+                    div(class="well weekrank-nav")
+                        ul(class="nav nav-pills nav-stacked")
+                            h4 周刷题榜
+                            table.table: tbody
+                                tr
+                                    td XadillaX
+                                    td 5 / 20
+                                tr
+                                    td Hungar
+                                    td 4 / 20
 
         div(id="footer")
             div.container
                 p 实验室 | 帮助 | 联系 | 关于 | 浙ICP备05074147号-1
-                p Copyright &copy; NOJ & XadillaX, NOJ V2 build20150329
+                p Copyright 2014 &copy; NOJ & XadillaX, NOJ V2 build20150329, Process #{(Date.now() - startTimestamp) / 1000}s
             div(id="footer-bg")
-            div(id="left-bottom")
+        div(id="left-bottom")
 
+        script(src="/r.js")
         script(src="/js/jquery.js")
         script(src="/js/bootstrap.js")
-        script.
-            var topPageType = "#topnav-#{pageType}";
-            var rightPageType = "#rightnav-#{pageType}";
-            $(topPageType).addClass("active");
-            $(rightPageType).addClass("active");
 
-            if($(topPageType).parent().parent().hasClass("dropdown")) {
-                $(topPageType).parent().parent().addClass("active");
-            }
+        script.
+            $(function() {
+                var topPageType = "#topnav-#{pageType}";
+                var rightPageType = "#rightnav-#{pageType}";
+                $(topPageType).addClass("active");
+                $(rightPageType).addClass("active");
+
+                if($(topPageType).parent().parent().hasClass("dropdown")) {
+                    $(topPageType).parent().parent().addClass("active");
+                }
+            });
+
+        //- the seajs stuff
+        if scripts.length
+            script.
+                require([
+                   !{scripts.map(function(s) {return "\"" + s + "\"";}).join(",")}
+                ], function() {
+                    var len = arguments.length;
+                    for(var i = 0; i < len; i++) {
+                        if(typeof arguments[i].run === "function") {
+                            arguments[i].run();
+                        }
+                    }
+                });
+
+        //- aditional script files
+        - for(var i = 0; i < scripts.length; i++) {
+        script(src="#{scripts[i]}")
+        - }

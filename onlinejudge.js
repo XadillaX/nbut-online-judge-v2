@@ -8,9 +8,8 @@ var logger = require("morgan");
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var config = require("./config");
-
 var router = require("./lib/routers");
-
+var middlewares = require("./lib/middlewares");
 var app = express();
 
 if(config.dev) {
@@ -34,37 +33,35 @@ if(config.dev) {
 }
 
 require("./lib/injectors");
+app.use(middlewares.renderData);
+app.use(middlewares.loginStatus);
 router.loadRouters(__dirname + "/controllers", app);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error("Not Found");
+app.use(function(req, resp, next) {
+    var err = new Error("Page Not Found");
     err.status = 404;
     next(err);
 });
 
-// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get("env") === "development") {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render("error", {
+if(config.dev) {
+    app.use(function(err, req, resp, _) {
+        resp.renderData.nav.push({ name: err.status || 500, url: req.originalUrl });
+        resp.status(err.status || 500);
+        resp.render("error", {
             message: err.message,
             error: err
         });
     });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render("error", {
-        message: err.message,
-        error: {}
+} else {
+    app.use(function(err, req, resp, _) {
+        resp.renderData.nav.push({ name: err.status || 500, url: req.originalUrl });
+        resp.status(err.status || 500);
+        resp.render("error", {
+            message: err.message,
+            error: {}
+        });
     });
-});
+}
 
 module.exports = app;

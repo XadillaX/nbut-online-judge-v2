@@ -11,6 +11,13 @@ gulp.task("favicon", function() {
         .pipe($.size());
 });
 
+gulp.task("require", function() {
+    return gulp.src("statics/src/vender/requirejs/require.js")
+        .pipe($.rename({ basename: "r" }))
+        .pipe(gulp.dest("statics/dev"))
+        .pipe($.size());
+});
+
 gulp.task("jquery", function() {
     return gulp.src("statics/src/vender/jquery/dist/jquery.js")
         .pipe(gulp.dest("statics/dev/js"))
@@ -30,17 +37,26 @@ gulp.task("images", function() {
         .pipe($.size());
 });
 
+gulp.task("javascript", function() {
+    return gulp.src("statics/src/js/**/*.js")
+        .pipe(gulp.dest("statics/dev/js"))
+        .pipe($.size());
+});
+
 gulp.task("dev-mode", [
     "favicon",
 
+    "require",
     "jquery",
     "bootstrap",
 
     "less",
 
-    "images"
+    "images",
+    "javascript"
 ], function() {
     gulp.watch("statics/src/favicon.ico", [ "favicon" ]);
     gulp.watch("statics/src/less/**/*.less", [ "less" ]);
     gulp.watch("statics/src/images/**/*", [ "images" ]);
+    gulp.watch("statics/src/js/**/*.js", [ "javascript" ]);
 });

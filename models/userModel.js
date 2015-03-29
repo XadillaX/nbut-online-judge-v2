@@ -3,6 +3,7 @@
  */
 var Toshihiko = require("toshihiko");
 var ProbList = require("../lib/modelType/probList");
+var md5 = require("MD5");
 
 var UserModel = global.toshihiko.define("oj_user", [
     { name: "userId", column: "userid", primaryKey: true, type: Toshihiko.Type.Integer },
@@ -26,5 +27,13 @@ var UserModel = global.toshihiko.define("oj_user", [
 
     { name: "showAvatarBar", column: "avatarbar", type: Toshihiko.Type.Integer }
 ]);
+
+UserModel.getGravatar = function(email, size) {
+    var qs = require("querystring");
+    return "http://1.gravatar.com/avatar/" + md5(email) + qs.stringify({
+         d: "monsterid",
+         size: parseInt(size)
+    });
+};
 
 module.exports = UserModel;

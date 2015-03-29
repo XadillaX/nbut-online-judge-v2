@@ -1,0 +1,30 @@
+extends ../layout
+block content
+    script.
+        var referer = "#{referer}";
+
+    div(class="well signin")
+        form.row(role="form")
+            div.col-md-3
+            div.col-md-6
+                div.signin-avatar
+                    img#avatar.img-circle(src="/images/default-avatar.gif")
+                    br
+                    div.avatar-loading-div
+                        img#avatar-loading(src="/images/loading.gif")
+                div.form-group
+                    label(for="username") <你的用户名咩 />
+                    input.form-control#username(type="username" placeholder="噼里啪啦...")
+
+                div.form-group
+                    label(for="password") <你的密码呐 />
+                    input.form-control#password(type="password" placeholder="叽里咕噜...")
+
+                div(class="btn-group btn-group-justified")
+                    a#go-pikachu(type="button" data-complete-text="皮卡丘成功出仓..." data-loading-text="精灵球正在出货..."
+                        class="btn btn-warning") 去吧，皮卡丘！
+                    a(type="button" class="btn btn-danger") 初音未来の消失
+
+                div(class="btn-group btn-group-justified" style="margin-top: 10px;")
+                    a(type="button" class="btn btn-info") 和我签订契约，成为魔法码畜吧 ／人◕‿‿◕人＼
+            div.col-md-3

@@ -1,16 +1,57 @@
 @import "partial/transparent.less";
-
-@background: "../images/background.png";
+@import "partial/v2var.less";
 
 body {
+  font-family: @default-font;
   background: url(@background) repeat;
 }
 
+.fl { float: left; }
+.fr { float: right; }
+.cl { clear: both; }
+
+a {
+  color: @orange;
+}
+
+a:hover {
+  color: darken(@orange, 5%);
+}
+
+a:focus {
+  color: darken(@orange, 15%);
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+/** navbar block */
+.navbar-right .btn-group-xs {
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+/** banner */
+.banner {
+  background: url(@banner-background) top center no-repeat;
+  height: 210px;
+}
+
+/** mi zhi daohang */
+.mi-nav .nav-pills li.active a {
+  background: @orange;
+}
+
+/** footer block */
 #footer {
   height: 80px;
   width: 100%;
   margin-top: 150px;
-  position: absolute;
+  position: fixed;
+  z-index: 2;
+  bottom: 0;
 }
 
 #footer .container {
@@ -19,6 +60,7 @@ body {
   text-align: center;
   color: #555;
 
+  z-index: 3;
   font-size: 10px;
   text-shadow: 0 1px 0 #fff;
 }
@@ -29,8 +71,8 @@ body {
 
   .transparent(20);
 
-  z-index: -1;
-  position: absolute;
+  z-index: 2;
+  position: fixed;
   bottom: 0;
   left: 0;
 
@@ -39,7 +81,7 @@ body {
 }
 
 #left-bottom {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   z-index: -2;
@@ -48,3 +90,7 @@ body {
   height: 375px;
   background: url("../images/left-bottom.png") no-repeat;
 }
+
+/** include pages */
+@import "pages/index.less";
+@import "pages/signin.less";
