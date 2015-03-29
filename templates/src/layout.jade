@@ -1,7 +1,48 @@
 doctype html
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
+    head
+        title= title
+        link(rel="stylesheet", href="/css/bootstrap.css")
+        link(rel="stylesheet", href="/css/v2.css")
+
+        meta(name="keywords" content="NOJ, NBUTOJ, 宁波工程学院, ACM, Online Judge, 在线评测系统, 宁波工程学院在线评测系统, NBUT Online Judg")
+        meta(name="description" content="NBUT Online Judge System, 新版本V2重装上阵")
+        meta(name="author" content="XadillaX")
+    body
+        header(class="navbar navbar-inverse navbar-fixed-top transparent-85" role="banner")
+            div.container
+                nav(class="collapse navbar-collapse" role="navigation")
+                    ul(class="nav navbar-nav")
+                        li(id="topnav-home"): a(href="/index") 幻想乡
+                        li.dropdown
+                            a.dropdown-toggle(href="#" data-toggle="dropdown") 练习馆
+                                b.caret
+                            ul.dropdown-menu
+                                li(id="topnav-problemlist"): a(href="/problem/list") 练习题库
+                                li(id="topnav-feedcode"): a(href="/feedcode") 喂食代码
+                                li.divider
+                                li(id="topnav-ranklist"): a(href="/ranklist") 用户排名
+                        li(id="topnav-run"): a(href="/run") 状态抄
+                        li(id="topnav-contest"): a(href="/contest") 比赛天
+                        li(id="topnav-faq"): a(href="/faq") 帮助
+
+        block content
+
+        div(id="footer")
+            div.container
+                p 实验室 | 帮助 | 联系 | 关于 | 浙ICP备05074147号-1
+                p Copyright &copy; NOJ & XadillaX, NOJ V2 build20150329
+            div(id="footer-bg")
+            div(id="left-bottom")
+
+        script(src="/js/jquery.js")
+        script(src="/js/bootstrap.js")
+        script.
+            var topPageType = "#topnav-#{pageType}";
+            var rightPageType = "#rightnav-#{pageType}";
+            $(topPageType).addClass("active");
+            $(rightPageType).addClass("active");
+
+            if($(topPageType).parent().parent().hasClass("dropdown")) {
+                $(topPageType).parent().parent().addClass("active");
+            }

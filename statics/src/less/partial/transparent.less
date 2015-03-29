@@ -1,0 +1,17 @@
+.generate-transparent();
+
+.generate-transparent(@i: 0) when (@i =< 100) {
+  .transparent-@{i} {
+    filter: ~"alpha(opacity=@{i})";
+    -moz-opacity: (@i / 100);
+    opacity: (@i / 100);
+  }
+
+  .generate-transparent((@i + 5));
+}
+
+.transparent(@trans) {
+  filter: ~"alpha(opacity=@{trans})";
+  -moz-opacity: (@trans / 100);
+  opacity: (@trans / 100);
+}

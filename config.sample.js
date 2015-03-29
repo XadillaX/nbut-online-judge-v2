@@ -2,6 +2,7 @@
  * Created by XadillaX on 2015/3/29.
  */
 module.exports = {
+    dev: true,
     database: {
         host: "127.0.0.1",
         port: 3306,

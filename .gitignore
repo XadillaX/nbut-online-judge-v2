@@ -16,3 +16,7 @@ node_modules
 
 .idea
 config.js
+log4js.js
+
+statics/dev
+statics/src/vender

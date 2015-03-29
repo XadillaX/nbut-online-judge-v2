@@ -1,0 +1,5 @@
+{
+  "directory": "statics/src/vender",
+  "analytics": false,
+  "timeout": 120000
+}
