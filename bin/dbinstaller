@@ -1,0 +1,46 @@
+#!/usr/bin/env node
+require("../lib/toshihiko");
+var mysql = require("mysql");
+var Scripter = require("hb-database-scripter");
+var async = require("async");
+var fs = require("fs");
+var config = require("../config");
+
+async.waterfall([
+    function(callback) {
+        var sql = "CREATE DATABASE `" + config.database.database + "`";
+
+        var connection = mysql.createConnection({
+            host     : config.database.host,
+            user     : config.database.username,
+            password : config.database.password,
+            port     : config.database.port
+        });
+        connection.connect();
+        connection.query(sql, function(err, result) {
+            connection.end();
+            if (err) callback(err);
+            callback();
+        });
+    },
+
+    function(callback) {
+        var sqls = fs.readFileSync(__dirname + "/../sql/tables.sql", { encoding: "utf8" });
+        sqls = sqls.split("\n\n");
+
+        var scripter = new Scripter(global.toshihiko.execute.bind(global.toshihiko));
+        for(var i = 0; i < sqls.length; i++) {
+            scripter.push(sqls[i]);
+        }
+
+        scripter.exec(callback);
+    }
+], function(err) {
+    if(err) {
+        console.error("error.", err.message);
+        process.exit(4);
+    }
+
+    console.log("done");
+    process.exit(0);
+});
