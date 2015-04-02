@@ -10,6 +10,8 @@ var bodyParser = require("body-parser");
 var config = require("./config");
 var router = require("./lib/routers");
 var middlewares = require("./lib/middlewares");
+var Session = require("express-session");
+var RiakStore = require("express-riak")(Session);
 var app = express();
 
 if(config.dev) {
@@ -32,6 +34,17 @@ if(config.dev) {
     app.use(express.static(path.join(__dirname, "statics/build")));
 }
 
+app.use(Session({
+    store: new RiakStore({
+        bucket: config.riak.prefix + "sessions",
+        connection: config.riak.connection
+    }),
+    secret: config.session.secret,
+    name: "nbut-ojsid",
+    resave: true,
+    saveUninitialized: true
+}));
+
 require("./lib/injectors");
 app.use(middlewares.renderData);
 app.use(middlewares.loginStatus);
@@ -48,7 +61,7 @@ if(config.dev) {
     app.use(function(err, req, resp, _) {
         resp.renderData.nav.push({ name: err.status || 500, url: req.originalUrl });
         resp.status(err.status || 500);
-        resp.render("error", {
+        return resp.render("error", {
             message: err.message,
             error: err
         });
@@ -57,7 +70,7 @@ if(config.dev) {
     app.use(function(err, req, resp, _) {
         resp.renderData.nav.push({ name: err.status || 500, url: req.originalUrl });
         resp.status(err.status || 500);
-        resp.render("error", {
+        return resp.render("error", {
             message: err.message,
             error: {}
         });

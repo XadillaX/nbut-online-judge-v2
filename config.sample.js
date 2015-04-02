@@ -3,6 +3,9 @@
  */
 module.exports = {
     dev: true,
+    session: {
+        secret: "#(@&*$(*@#&(@*&(@*faksjdh"
+    },
     database: {
         host: "127.0.0.1",
         port: 3306,
@@ -14,5 +17,17 @@ module.exports = {
     memcached: {
         servers: [ "localhost:11211" ],
         options: {}
+    },
+
+    renderData: {
+        title: "宁波工程学院在线评测幻想乡"
+    },
+
+    riak: {
+        prefix: "onlinejudge.",
+        connection: {
+            host: "localhost",
+            port: 8098
+        }
     }
 };
