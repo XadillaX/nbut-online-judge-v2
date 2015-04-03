@@ -25,9 +25,9 @@ module.exports = {
 
     riak: {
         prefix: "onlinejudge.",
-        connection: {
+        nodes: [{
             host: "localhost",
-            port: 8098
-        }
+            port: 8087
+        }]
     }
 };

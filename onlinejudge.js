@@ -34,20 +34,21 @@ if(config.dev) {
     app.use(express.static(path.join(__dirname, "statics/build")));
 }
 
+app.use(middlewares.renderData);
 app.use(Session({
     store: new RiakStore({
         bucket: config.riak.prefix + "sessions",
-        connection: config.riak.connection
+        connection: {
+            nodes: config.riak.nodes
+        }
     }),
     secret: config.session.secret,
-    name: "nbut-ojsid",
-    resave: true,
+    name: "nOjSiD",
+    resave: false,
     saveUninitialized: true
 }));
-
-require("./lib/injectors");
-app.use(middlewares.renderData);
 app.use(middlewares.loginStatus);
+require("./lib/injectors");
 router.loadRouters(__dirname + "/controllers", app);
 
 // catch 404 and forward to error handler

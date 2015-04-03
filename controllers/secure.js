@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var User = require("../models/userModel");
+var md5 = require("MD5");
 
 router.get("/gravatar/:username/:size", function(req, resp) {
     var username = req.params.username;
@@ -12,6 +13,50 @@ router.get("/gravatar/:username/:size", function(req, resp) {
         }
 
         resp.send(User.getGravatar(user.email, size));
+    });
+});
+
+router.get("/signout", function(req, resp) {
+    if(resp.isLoggedIn()) {
+        delete req.session.userId;
+    }
+
+    resp.redirect(req.headers.referer || "/");
+});
+
+router.post("/signin", function(req, resp) {
+    if(resp.isLoggedIn()) {
+        return this.error("主人你已经登录啦。");
+    }
+
+    var username = req.body.username;
+    var password = req.body.password;
+
+    if(!username || username.length < 4 || username.length > 16) {
+        return this.error("请输入正确长度的用户名。");
+    }
+
+    if(!password || password.length < 5 || password.length > 16) {
+        return this.error("请输入正确长度的密码。");
+    }
+
+    User.where({ username: username }).findOne(function(err, user) {
+        if(err) {
+            console.error(err);
+            return resp.error("服务器感冒啦，请稍后重试。");
+        }
+
+        if(!user) {
+            return resp.error("错误的用户名或者密码。");
+        }
+
+        if(user.password.toLowerCase() !== md5(password).toLowerCase()) {
+            return resp.error("错误的用户名或者密码。");
+        }
+
+        req.session.userId = user.userId;
+
+        resp.send({ status: 1 });
     });
 });
 

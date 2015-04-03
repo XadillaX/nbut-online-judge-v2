@@ -4,6 +4,7 @@
 var gulp = require("gulp");
 var $ = require("gulp-load-plugins")();
 require("./bootstrap");
+require("./sweetalert");
 
 gulp.task("favicon", function() {
     return gulp.src("statics/src/favicon.ico")
@@ -49,6 +50,7 @@ gulp.task("dev-mode", [
     "require",
     "jquery",
     "bootstrap",
+    "sweetalert",
 
     "less",
 

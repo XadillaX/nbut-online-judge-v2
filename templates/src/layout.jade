@@ -3,6 +3,7 @@ html
     head
         title= title
         link(rel="stylesheet", href="/css/bootstrap.css")
+        link(rel="stylesheet", href="/css/sweet-alert.css")
         link(rel="stylesheet", href="/css/v2.css")
 
         meta(name="keywords" content="NOJ, NBUTOJ, 宁波工程学院, ACM, Online Judge, 在线评测系统, 宁波工程学院在线评测系统, NBUT Online Judg")
@@ -32,7 +33,13 @@ html
                              a(href="/secure/signin" title="登录" type="button" class="btn btn-default") 登录
                              a(type="button" class="btn btn-default") 注册
                          - } else {
-                         1234
+                         li#top-avatar-bar
+                             img.img-circle(height="32" width="32" src=loggedIn.avatar)
+                         li#topnav-mine
+                             a(href="/user/mine" title="我的资料")= loggedIn.username
+                         li: small (#{loggedIn.solvedCount} / #{loggedIn.submittedCount})
+                         li: div(class="btn-group btn-group-xs")
+                             a(class="btn btn-danger" href="/secure/signout" type="button") 登出
                          - }
 
         div.banner
@@ -100,6 +107,12 @@ html
         //- the seajs stuff
         if scripts.length
             script.
+                require.config({
+                    baseUrl: "/js",
+                    paths: {
+                        sweetAlert: "sweet-alert"
+                    }
+                });
                 require([
                    !{scripts.map(function(s) {return "\"" + s + "\"";}).join(",")}
                 ], function() {
@@ -110,8 +123,3 @@ html
                         }
                     }
                 });
-
-        //- aditional script files
-        - for(var i = 0; i < scripts.length; i++) {
-        script(src="#{scripts[i]}")
-        - }
