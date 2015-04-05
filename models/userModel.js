@@ -28,9 +28,16 @@ var UserModel = global.toshihiko.define("oj_user", [
     { name: "showAvatarBar", column: "avatarbar", type: Toshihiko.Type.Integer }
 ]);
 
+UserModel.ROLE_ID = {
+    DEFAULT: 1,
+    SETTER: 2,
+    ADMIN: 3,
+    CONTESTANT: -100
+};
+
 UserModel.getGravatar = function(email, size) {
     var qs = require("querystring");
-    return "http://1.gravatar.com/avatar/" + md5(email) + qs.stringify({
+    return "http://gravatar.duoshuo.com/avatar/" + md5(email) + qs.stringify({
          d: "monsterid",
          size: parseInt(size)
     });
