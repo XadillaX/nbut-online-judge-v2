@@ -1,8 +1,13 @@
 var express = require("express");
-var router = express.Router();
-var User = require("../models/userModel");
 var md5 = require("MD5");
+var router = express.Router();
 
+var helper = require("../lib/helper");
+var User = helper.common.getModel("user");
+
+/**
+ * 用户头像地址
+ */
 router.get("/gravatar/:username/:size", function(req, resp) {
     var username = req.params.username;
     var size = req.params.size;
@@ -16,6 +21,9 @@ router.get("/gravatar/:username/:size", function(req, resp) {
     });
 });
 
+/**
+ * 登出
+ */
 router.get("/signout", function(req, resp) {
     if(resp.isLoggedIn()) {
         delete req.session.userId;
@@ -24,6 +32,9 @@ router.get("/signout", function(req, resp) {
     resp.redirect(req.headers.referer || "/");
 });
 
+/**
+ * 登入（动作）
+ */
 router.post("/signin", function(req, resp) {
     if(resp.isLoggedIn()) {
         return this.error("主人你已经登录啦。");
@@ -60,6 +71,9 @@ router.post("/signin", function(req, resp) {
     });
 });
 
+/**
+ * 登入（界面）
+ */
 router.get("/signin", function(req, resp) {
     if(resp.isLoggedIn()) {
         return this.redirect("/index");

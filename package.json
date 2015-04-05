@@ -20,9 +20,10 @@
     "morgan": "^1.5.1",
     "mysql": "^2.6.1",
     "nomnom": "^1.8.1",
+    "pangunode": "^0.1.0",
     "serve-favicon": "^2.2.0",
     "sugar": "^1.4.1",
-    "toshihiko": "^0.2.6"
+    "toshihiko": "^0.2.8"
   },
   "devDependencies": {
     "gulp": "^3.8.11",
