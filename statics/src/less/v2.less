@@ -103,6 +103,19 @@ a:focus {
   background: url("../images/left-bottom.png") no-repeat;
 }
 
+/** pagination */
+.pagination {
+  > li {
+    a { color: @orange; }
+    a:hover, a:focus { color: darken(@orange, 20%); }
+  }
+
+  > li.active a, > li.active span {
+    &, &:hover, &:focus { background: @orange; border-color: darken(@orange, 15%); }
+  }
+}
+
 /** include pages */
 @import "pages/index.less";
 @import "pages/signin.less";
+@import "pages/problemlist.less";

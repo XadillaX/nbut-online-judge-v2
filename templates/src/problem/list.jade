@@ -1,0 +1,80 @@
+extends ../layout
+block content
+    div(class="well problem-list")
+        table(class="table table-striped table-hover")
+            thead
+                tr.row
+                    th(colspan="4" style="text-align: center;")
+                        ul(class="pagination pagination-sm" style="margin: 0;")
+                            // first page
+                            - if(currentPage === 1) {
+                            li.disabled: a(href="#") &laquo;
+                            - } else {
+                            li: a(href="/problem/list/1") &laquo;
+                            - }
+
+                            // all the pages
+                            - for(var i = 1; i <= totalPages; i++) {
+                                - if(i === currentPage) {
+                                li.active: a(href="#") #{i}
+                                - } else {
+                                li: a(href="/problem/list/#{i}") #{i}
+                                - }
+                            - }
+
+                            // last page
+                            - if(currentPage === totalPages) {
+                            li.disabled: a(href="#") &raquo;
+                            - } else {
+                            li: a(href="/problem/list/#{totalPages}") &raquo;
+                            - }
+                tr.row
+                    th(class="col-md-1 problem-list-status") 状态
+                    th(class="col-md-1 problem-list-id") 题号
+                    th(class="col-md-8 problem-list-title" style="text-align: center;") 标题
+                    th(class="col-md-2 problem-list-ratio") 通过 / 提交
+
+            tfoot
+                tr.row
+                    th(colspan="4" style="text-align: center;")
+                        ul(class="pagination pagination-sm" style="margin: 0;")
+                            // first page
+                            - if(currentPage === 1) {
+                            li.disabled: a(href="#") &laquo;
+                            - } else {
+                            li: a(href="/problem/list/1") &laquo;
+                            - }
+
+                            // all the pages
+                            - for(var i = 1; i <= totalPages; i++) {
+                                - if(i === currentPage) {
+                                li.active: a(href="#") #{i}
+                                - } else {
+                                li: a(href="/problem/list/#{i}") #{i}
+                                - }
+                            - }
+
+                            // last page
+                            - if(currentPage === totalPages) {
+                            li.disabled: a(href="#") &raquo;
+                            - } else {
+                            li: a(href="/problem/list/#{totalPages}") &raquo;
+                            - }
+
+            tbody
+                - for(var i = 0; i < problems.length; i++) {
+                tr.row
+                    td(class="col-md-1 problem-list-status")
+                    td(class="col-md-1 problem-list-id") #{problems[i].index}
+                    td(class="col-md-8 problem-list-title")
+                        a(href="/problem/#{problems[i].index}") #{problems[i].title}
+                    td(class="col-md-2 problem-list-ratio")
+                        | #{problems[i].solvedCount} /
+                        | #{problems[i].submittedCount}
+                        br
+                        - if(problems[i].submittedCount !== 0) {
+                        | (#{((problems[i].solvedCount / problems[i].submittedCount) * 100).toFixed(2)}%)
+                        - } else {
+                        | (0.00%)
+                        - }
+                - }

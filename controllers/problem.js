@@ -43,7 +43,11 @@ router.get(/^\/list(\/(\d+\/?)?)?$/, function(req, resp, next) {
         }
     ], function(err, problems) {
         if(err) return next(err);
-        resp.send(problems);
+
+        resp.renderData.nav.push({ name: "Problems", url: "/problem/list" });
+        resp.renderData.nav.push({ name: "Page " + page, url: "/problem/list/" + page });
+
+        resp.render("problem/list", { problems: problems, totalPages: context.pages, currentPage: page });
     });
 });
 
