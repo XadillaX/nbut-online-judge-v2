@@ -67,7 +67,7 @@ block content
                     td(class="col-md-1 problem-list-status")
                     td(class="col-md-1 problem-list-id") #{problems[i].index}
                     td(class="col-md-8 problem-list-title")
-                        a(href="/problem/#{problems[i].index}") #{problems[i].title}
+                        a(id="prob-#{problems[i].index}" href="/problem/#{problems[i].index}") #{problems[i].title}
                     td(class="col-md-2 problem-list-ratio")
                         | #{problems[i].solvedCount} /
                         | #{problems[i].submittedCount}

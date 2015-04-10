@@ -1,0 +1,54 @@
+extends ../layout
+block content
+    div(class="well problem-info")
+        div.row
+            div(class="col-md-12 text-center" style="border-bottom: 1px solid #e3e3e3; padding-bottom: 10px")
+                h2 #{problem.title}
+                small.problem-timememo
+                    | （时间限制：
+                    span(class="label label-default") #{problem.timeLimit}
+                    |  ms
+                    | 内存限制：
+                    span(class="label label-default") #{problem.memoLimit}
+                    |  K）
+                br
+                div(class="btn-group btn-group-xs" style="margin-top: 10px;")
+                    a(title="提交" href="/feedcode/#{problem.index}" type="button" class="btn btn-success") 提交
+                    a(title="状态" href="/run?problem=#{problem.index}" type="button" class="btn btn-info") 状态
+                    a(title="统计" href="/problem/#{problem.index}/statistic" type="button" class="btn btn-warning") 统计
+                    a(title="讨论" href="/discuss/#{problem.index}/" type="button" class="btn btn-danger") 讨论
+
+        div.row
+            div.col-md-12#description
+                h3: a(href="javascript:void(0);") ◇ 题目描述
+                div(style="overflow-x: auto;") !{problem.description}
+
+        div.row
+            div.col-md-12#input-data
+                h3: a(href="javascript:void(0);") ◇ 输入数据
+                div(style="overflow-x: auto;") #{problem.input}
+
+        div.row
+            div.col-md-12#output-data
+                h3: a(href="javascript:void(0);") ◇ 输出数据
+                div(style="overflow-x: auto;") #{problem.output}
+
+        div.row
+            div.col-md-12#sample-input
+                h3: a(href="javascript:void(0);") ◇ 样例输入
+                pre(style="color: #dd1144;") #{problem.sampleInput}
+
+        div.row
+            div.col-md-12#sample-output
+                h3: a(href="javascript:void(0);") ◇ 样例输出
+                pre(style="color: #dd1144;") #{problem.sampleOutput}
+
+        div.row
+            div.col-md-12#hint
+                h3: a(href="javascript:void(0);") ◇ 提示信息
+                div(style="overflow-x: auto;") #{problem.hint}
+
+        div.row
+            div.col-md-12#source
+                h3: a(href="javascript:void(0);") ◇ 题目来源
+                div(style="overflow-x: auto;") #{problem.source}

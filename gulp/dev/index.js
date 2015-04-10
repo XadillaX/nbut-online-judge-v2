@@ -44,6 +44,12 @@ gulp.task("javascript", function() {
         .pipe($.size());
 });
 
+gulp.task("headroom", function() {
+    return gulp.src("statics/src/vender/headroom.js/dist/**/*.js")
+        .pipe(gulp.dest("statics/dev/js"))
+        .pipe($.size());
+});
+
 gulp.task("dev-mode", [
     "favicon",
 
@@ -51,6 +57,7 @@ gulp.task("dev-mode", [
     "jquery",
     "bootstrap",
     "sweetalert",
+    "headroom",
 
     "less",
 

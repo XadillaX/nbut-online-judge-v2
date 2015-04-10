@@ -17,6 +17,44 @@ var ContestProblemModel = global.toshihiko.define("oj_contestproblem", [
 ]);
 
 /**
+ * 获取一个题目前面还有几个题目
+ * @param contestId
+ * @param index
+ * @param callback
+ */
+ContestProblemModel.getAProblemsPosition = function(contestId, index, callback) {
+    this.where({
+        contestId: contestId,
+        index: { $lt: index }
+    }).count(callback);
+};
+
+/**
+ * 根据比赛编号、索引号获取题目详情
+ * @param contestId
+ * @param index
+ * @param callback
+ */
+ContestProblemModel.getProblemInformation = function(contestId, index, callback) {
+    this.where({ contestId: contestId, index: index }).findOne(function(err, problem) {
+        if(err) return callback(err);
+        if(!problem) return callback();
+
+        var Problem = helper.common.getModel("problem");
+        Problem.where({ problemId: problem.problemId }).findOne(function(err, detail) {
+            if(err) return callback(err);
+            if(!detail) return callback();
+
+            problem = problem.toJSON();
+            detail = detail.toJSON();
+            detail.title = pangu(detail.title);
+
+            return callback(undefined, Object.merge(problem, detail));
+        });
+    });
+};
+
+/**
  * 获取题目页数
  * @param contestId
  * @param perPage

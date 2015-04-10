@@ -91,6 +91,8 @@ html
         script(src="/r.js")
         script(src="/js/jquery.js")
         script(src="/js/bootstrap.js")
+        script(src="/js/headroom.js")
+        script(src="/js/jQuery.headroom.js")
 
         script.
             $(function() {
@@ -102,6 +104,22 @@ html
                 if($(topPageType).parent().parent().hasClass("dropdown")) {
                     $(topPageType).parent().parent().addClass("active");
                 }
+
+                $("header[role=banner]").headroom({
+                    offset: 10,
+                    onNotTop: function() {
+                        $("header[role=banner]").stop().animate({ top: "-50px" });
+                    },
+                    onTop   : function() {
+                        $("header[role=banner]").stop().animate({ top: "0" });
+                    },
+                    onPin   : function() {
+                        $("header[role=banner]").stop().animate({ top: "0" });
+                    },
+                    onUnpin : function() {
+                        $("header[role=banner]").stop().animate({ top: "-50px" });
+                    }
+                });
             });
 
         //- the seajs stuff
