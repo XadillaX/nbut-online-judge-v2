@@ -1,0 +1,37 @@
+extends ../layout
+block content
+    link(rel="stylesheet", href="http://openfontlibrary.org/face/fantasque-sans-mono" type="text/css")
+    link(rel="stylesheet", href="/codemirror/lib/codemirror.css")
+    link(rel="stylesheet", href="/codemirror/addon/fold/foldgutter.css")
+    link(rel="stylesheet", href="/codemirror/theme/solarized.css")
+    div(class="well problem-info" id="feedcode")
+        form(method="POST" action="/feedcode/!nyaa")
+            div.row
+                div.col-md-5
+                    input#index.form-control(placeholder="题目编号喵 (｡ŏ_ŏ)" type="number"
+                            value="#{index}" name="index")
+
+                div.col-md-5
+                    select.form-control#lang(name="lang")
+                        option(value=1) GCC
+                        option(value=2) G++
+                        option(value=4) Free Pascal
+
+                div.col-md-2
+                    input(type="submit" class="btn btn-default btn-block")
+
+                div.col-md-12
+                    textarea#code.code(name="code")
+
+    script(src="/codemirror/lib/codemirror.js")
+    script(src="/codemirror/mode/clike/clike.js")
+    script(src="/codemirror/mode/pascal/pascal.js")
+    script(src="/codemirror/addon/fold/foldcode.js")
+    script(src="/codemirror/addon/fold/foldgutter.js")
+    script(src="/codemirror/addon/fold/brace-fold.js")
+    script(src="/codemirror/addon/fold/comment-fold.js")
+    script.
+        var index = "#{index}";
+        var defaultMode = "x-csrc";
+        var defaultIndent = 4;
+

@@ -50,6 +50,12 @@ gulp.task("headroom", function() {
         .pipe($.size());
 });
 
+gulp.task("codemirror", function() {
+    return gulp.src("statics/src/vender/codemirror/**/*.{css,js}")
+        .pipe(gulp.dest("statics/dev/codemirror"))
+        .pipe($.size());
+});
+
 gulp.task("dev-mode", [
     "favicon",
 
@@ -61,6 +67,8 @@ gulp.task("dev-mode", [
 
     "less",
 
+    "codemirror",
+
     "images",
     "javascript"
 ], function() {
@@ -68,4 +76,5 @@ gulp.task("dev-mode", [
     gulp.watch("statics/src/less/**/*.less", [ "less" ]);
     gulp.watch("statics/src/images/**/*", [ "images" ]);
     gulp.watch("statics/src/js/**/*.js", [ "javascript" ]);
+    gulp.watch("statics/src/vender/codemirror/**/*.(css|js)");
 });
