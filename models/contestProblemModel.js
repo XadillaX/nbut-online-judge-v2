@@ -17,7 +17,7 @@ var ContestProblemModel = global.toshihiko.define("oj_contestproblem", [
 ]);
 
 /**
- * 获取一个题目前面还有几个题目
+ * 获取一个题目前面还有几个题目，用于计算页码
  * @param contestId
  * @param index
  * @param callback
