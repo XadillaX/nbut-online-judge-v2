@@ -1,0 +1,10 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.13.3
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:hoek:20180212':
+    - express-riak > riakpbc > joi > hoek:
+        patched: '2018-12-21T00:20:59.157Z'
+    - express-riak > riakpbc > joi > topo > hoek:
+        patched: '2018-12-21T00:20:59.157Z'
