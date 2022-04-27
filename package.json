@@ -23,7 +23,7 @@
     "pangunode": "^0.1.0",
     "serve-favicon": "^2.2.0",
     "sugar": "^1.4.1",
-    "toshihiko": "^0.2.8"
+    "toshihiko": "^0.6.4"
   },
   "devDependencies": {
     "gulp": "^3.8.11",
